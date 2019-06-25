@@ -47,16 +47,16 @@ console.log(atem.state); // or use this.
 ### Events
 
 - `connect()`
-It will called on receive first ping packet from ATEM.
+It will be called on receive first ping packet from ATEM.
 
 - `disconnect()`
-It will called on detect that it cannot communicate to ATEM in `RECONNECT_INTERVAL` seconds.
+It will be called on detect that it cannot communicate to ATEM in `RECONNECT_INTERVAL` seconds.
 
 - `ping()`
-It will called on receive ping packet from ATEM at an interval of one second.
+It will be called on receive ping packet from ATEM at an interval of one second.
 
 - `stateChanged(err, state)`
-It will called on receive state packet from ATEM.
+It will be called on receive state packet from ATEM.
 
 ### File Uploader Usage
 

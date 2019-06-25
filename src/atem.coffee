@@ -60,6 +60,26 @@ class ATEM
     Error:   0x08
     Ack:     0x16
 
+  @VideoMode =
+    0: '525i59.94 NTSC'
+    1: '625i 50 PAL'
+    2: '525i59.94 NTSC 16:9'
+    3: '625i 50 PAL 16:9'
+    4: '720p50'
+    5: '720p59.94'
+    6: '1080i50'
+    7: '1080i59.94'
+    8: '1080p23.98'
+    9: '1080p24'
+    10: '1080p25'
+    11: '1080p29.97'
+    12: '1080p50'
+    13: '1080p59.94'
+    14: '2160p23.98'
+    15: '2160p24'
+    16: '2160p25'
+    17: '2160p29.97'
+  
   state:
     topology:
       numberOfMEs: null
@@ -86,6 +106,7 @@ class ATEM
       downstreamKeyOn: []
       downstreamKeyTie: []
       auxs: {}
+      mode: null
     audio:
       hasMonitor: null
       numberOfChannels: null
@@ -337,6 +358,12 @@ class ATEM
           rightGain = @_parseNumber(buffer[offset+5..offset+7])
           @_merge(@state.audio.channels[channelMappings[i]], { leftLevel: leftGain/8388607, rightLevel: rightGain/8388607 })
           offset += 16
+
+      when '_VMC' # Video Mixer Config
+        @state.video.configModes = @_parseNumber(buffer[1..3])
+
+      when 'VidM' # VideoMode
+        @state.video.mode = VideoMode[@_parseNumber(buffer[0])]
 
   # Convert number from bytes.
   _parseNumber: (bytes) ->
